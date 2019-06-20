@@ -1,0 +1,155 @@
+<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+<!-- addClass()向被选元素添加一个或多个类 -->
+<!-- removeClass()从被选元素删除一个或多个类 -->
+<!-- toggleClass()被选元素进行添加/删除类的切换操作 -->
+<!-- css()设置或返回样式属性 -->
+<!-- css("propertyname")返回制定CSS属性值 -->
+<!-- css({"propertyname":"value","propertyname":"value",...})设置多个CSS属性值 -->
+<script>
+    $(function(){
+        $(".btn1").click(function(){
+            $("#classDiv,#classDiv1").addClass("size color");
+        });
+        $(".btn2").click(function(){
+            $("#classDiv,#classDiv1").removeClass("size color");
+        });
+        $(".btn3").click(function(){
+            $("#classDiv,#classDiv1").toggleClass("color");
+        });
+        $(".btn4").click(function(){
+            $(".cssAddDiv").css({"width":"200px","height":"200px","backgroundColor":"orange"});
+        });
+        $(".btn5").click(function(){
+            alert($(".cssAddDiv").css("background-color"));
+        });
+    });
+</script>
+<style>
+    .size{font-size: 30px;}
+    .color{color: aqua;}
+</style>
+<input type="button" class="btn1" value="添加">
+<input type="button" class="btn2" value="删除">
+<input type="button" class="btn3" value="转换">
+<button class="btn4">加样式</button>
+<button class="btn5">显示</button>
+<div><i id="classDiv">Han Ya Ning</i></div>
+<div><i id="classDiv1">Han Ya Ning</i></div>
+<div class="cssAddDiv">H5</div>
+
+
+
+
+<!--元素内部 -->
+<!-- append()在被选元素内部的结尾插入指定内容 -->
+<!-- prepend()在被选元素内部的开头插入指定内容 -->
+
+<!-- 元素外部 -->
+<!-- after()在被选元素之后插入内容 -->
+<!-- before()在被选元素之前插入内容 -->
+
+<!-- remove()删除被选元素（及其子元素）可以接收参数支持jQuery选择器-->
+<!-- empty()从被选元素中删除子元素 -->
+<script>
+        $(function(){
+            $(".btn1").click(function(){
+                $(".addDiv").append("<i>jQuery1</i>").prepend("<i>jQuery2</i>").after("<i>jQuery3</i>").before("<i>jQuery4</i>");
+            });
+            $(".btn2").click(function(){
+                $("li").remove(".deleteLi");
+            });
+            $(".btn3").click(function(){
+                $(".deleteDiv").empty();
+            });
+        });
+    </script>
+    <style>
+        .fL{float: left;}.m0{margin: 0;}
+    </style>
+    <style>
+        div{
+            width: 200px;height: 50px;
+            border: 2px solid aqua;background-color: aquamarine;
+        }
+    </style>
+    <input class="btn1 fL" type="button" value="添加">
+    <input class="btn2 fL" type="button" value="删除1">
+    <input class="btn3 fL" type="button" value="删除2">
+    <div class="addDiv fL"></div>
+    <div class="deleteDiv fL">
+        <ul class="deleteUl fL m0">
+            <li class="deleteLi">1</li>
+            <li>2</li>
+        </ul>
+    </div>
+
+    
+
+
+    <!--  $(selector).animate({params},speed,callback) -->
+<!--  $(selector).stop(stopAll,goToEnd)
+stopAll规定是否清除当前队列，默认值是false（即停止当前动画，后面队列的动画依旧执行），goToEnd规定是否立即执行完当前动画，默认值是false，都可选 -->
+<!-- params定义形成动画的css属性 speed规定效果时长 callback动画完成后执行的函数名称
+params为一个必须参数 -->
+<script>
+        //使用animate（）方法来操作css属性时用Camel标记法（例如：padding-left应写成paddingLeft）
+        $(function(){
+            $(".btn1").click(function(){
+                $(".animateDiv1").animate({
+                    left: '+=200px',
+                    height: '+=100px',
+                    width: '+=100px', // 相对值（相对于元素的当前值)
+                    //backgroundColor: 'orange'// 色彩动画不包含在核心jQuery库中
+                });
+            });
+            $(".btn2").click(function(){
+                $(".animateDiv2").animate({
+                    height: 'toggle' //使用预定义的值
+                });
+            })
+            $(".btn3").click(function(){
+                var div = $(".animateDiv3");// 队列，依次执行下去
+                div.animate({width: '300px'},3000);
+                div.animate({fontSize: '50px'},3000);
+                div.animate({height: '300px'},3000);
+                div.animate({fontSize: '25px'},3000);
+                div.animate({left: '300px'},3000);
+                div.animate({width: '200px'},3000);
+                div.animate({fontSize: '50px'},3000);
+                div.animate({height: '200px'},3000);
+                div.animate({height: '300px'},3000);
+            })
+            $(".btn4").click(function(){
+                $(".animateDiv3").stop(true);
+            });
+        });
+    </script>
+    <style>
+        .animateDiv1{
+            width: 200px;height: 200px;
+            border: 2px solid aqua;
+            position: absolute;
+            background-color: red;
+        }
+        .animateDiv2{
+            width: 200px;height: 200px;
+            border: 2px solid brown;
+            position: absolute;
+            background-color: gray;
+        }
+        .animateDiv3{
+            width: 200px; height: 200px;
+            border: 2px solid blue;
+            position: absolute;left: 200px;
+            background-color: blanchedalmond;
+        }
+    </style>
+    <input class="btn1" type="button">点击我1
+    <div class="animateDiv1"></div>
+    <input class="btn2" type="button">点击我2
+    <div class="animateDiv2"></div>
+    <input class="btn3" type="button">点击我3
+    <div class="animateDiv3"><i>Han Ya Ning</i></div>
+    <input class="btn4" type="button">停止动画
+    
+    

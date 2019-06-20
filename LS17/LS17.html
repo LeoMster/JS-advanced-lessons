@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var superObj = {
+        x:1,
+        y:2
+    };
+    var subObj_First = Object.create(superObj);
+    var subObj_Second = Object.create(superObj);
+    subObj_First.__proto__.x = 5;
+    console.log(subObj_Second.x);     //5
+
+
+
+        //继承可以通过构造函数，create方法
+        var superObj = {
+        x:1,
+        y:2
+    };
+    var superObj_First = Object.create(superObj);
+    var superObj_Second = Object.create(superObj);
+    //superObj_First.x = 5;  superObj_Second.x不会变，相当于在superObj_first自身上添加
+    superObj_First.__proto__.x =5;
+    console.log(superObj_Second.x);  //5
+    console.log(superObj_First == superObj_Second);  false
+    console.log(superObj_First.__proto__);  //superObj
+
+
+    function Person(name){
+        this.name = name;
+    }
+    Person.prototype.age = 20;
+    Person.prototype.showName = function(){
+        console.log(this.name);
+    }
+    var person = new Person("Mike");
+    function Student(id){
+        this.id = id;
+    }
+    Student.prototype = new Person("Mike");
+    /*
+        由new Person()实例化得到的对象
+        person name属性Mike，person.__proto__.age,person.__proto__.showName
+    */
+    var s1 = new Student(2017001);
+    var s2 = new Student(2017002);
+    console.log(s1.id,s2.id);
+    /*
+        s1自身上没有age,s1.__proto__ == Student.prototype
+        Student.prototype = new Person("Mike);
+        person对象本身没有age属性,S1.__proto__.__prototype == person.__proto__
+        person.__proto__ == Person.prototype
+        S1.__proto__.__proto__ = Person.prototype
+        Student.prototype = person
+    */
+    console.log(s1.age,s2.age);
+    console.log(s1.name,s2.name);
+
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+    }
+    Person.prototype.showName = function(){
+        console.log(this.name);
+    }
+    /*
+        Person.call(this,name,age)切换了Person函数内部指向
+    */
+    function Student(name,age,id){
+        Person.call(this,name,age);
+        this.id = id;
+    }
+    Student.prototype.__proto__ = Person.prototype;
+    var s1 = new Student("XXX",22,2017001);
+    var s2 = new Student("www",23,2017002);
+
+    function Person(name,age){
+        this.name = name;
+        this.age;
+    }
+    Person.prototype.showName = function(){
+        console.log(this.name);
+    }
+    function Student(name,age,id){
+        Person.call(this,name,age);
+        this.id = id;
+    }
+    // var p1 = Object.create(Person.prototype);
+    // Student.prototype = p1;
+    Student.prototype = Object.create(Person.prototype);
+    console.log(Student.prototype);   //Person{}
+    Student.prototype.constructor = Student;  //重新指定constructor属性
+    var s1 = new Student("XXX",22,2017001);
+    var s2 = new Student("www",32,2017002);
+    console.log(Student.prototype);  //Person{constructor:f}
+
+
+</script>
+</html>

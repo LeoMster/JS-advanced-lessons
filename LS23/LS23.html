@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+        /*
+        json字符串和js对象可以进行相互交换，并且js对象可以很容易的渲染到页面中，
+        所以可以将从后台获取到json对象，进行渲染
+        前后端的传输，数据存储
+    */
+    var jsObject = {"username":"zhangsan","age":20};
+    var ulObject = document.getElementById("list");
+    for(var i in jsObject){
+        var liNode = document.createElement("li");
+        liNode.innerHTML = i+ " " +jsObject[i];
+        ulObject.appendChild(liNode);
+    }
+
+
+    //js对象，数组转换为json字符串
+    var jsObject = {
+        "username":"zhangsan",
+        "age":20,
+        "address":{"add":"石家庄","addcode":"11322"}
+    }
+    //var jsonStr = JSON.stringify(jsObject);
+    //一般不用写，json内部完成操作.这样只是增对其加一层处理
+    var jsonStr = JSON.stringify(jsObject,function(k,v){
+            if(typeof(v) == "number"){
+                return undefined;  //忽略掉这个属性
+            }
+            return v;
+    })
+    console.log(jsonStr);
+    console.log(typeof(jsonStr));
+
+    //var jsObject2 = JSON.parse(jsonStr);
+    //遍历address时，直接输出内部
+    var jsObject2 = JSON.parse(jsonStr,function(k,v){
+        console.log(k,v);
+    })
+    console.log(jsObject2);   //输出的属性没有age,上边的过滤对其自身有影响
+    console.log(typeof jsObject2);  //Object
+
+    //json文件中，键名要加引号
+    //json文件有在线的文件检查
+
+</script>
+</html>

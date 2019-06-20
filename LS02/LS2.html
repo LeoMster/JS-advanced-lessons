@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log(typeof null);  //object
+    console.log(typeof undefined); //undefined
+    console.log(typeof function foo(){}); //function
+    console.log(typeof Array);  //function
+    console.log(typeof Function); //function
+    console.log(typeof Date);  //function
+    console.log(typeof Number);  //function
+    console.log(typeof Math);   //object  math不是函数
+
+    var b = [12,34,{},""];
+    console.log(b instanceof Object);   //true,b为数组类型，其为引用类型
+
+    //1.判断这个对象能否实用后面的构造函数实例化得到
+    //2.判断能否在对象的原型链上找到构造函数的prototype
+    function Person(username,age){
+        this.username = username;
+        this.age = age;
+    }
+    var person = new Person("张三",10);
+    console.log(person instanceof Person);
+    //判断是否可以在person的原型链上找到Object构造函数prototype
+    console.log(person.__proto__ == Person.prototype);//true 两者为等价关系
+    //原型链  得到该对象上的许多方法
+    console.log(person.__proto__.__proto__);
+
+    //基本（原始）数据类型与引用（对象）类型的区别 赋值方式不同,原始类型直接访问值,是值赋值
+    var str_a = "a"; 
+    var str_b = str_a; 
+    str_b = "b"; 
+    console.log(str_a,str_b);   //str_a = 'a',str_b = 'b'
+    //引用类型
+    var obj_a = {v:"a"};  //obj_a定义的为引用类型，存贮于堆中
+    var obj_b = obj_a;    //这时将引用赋给obj_b，其存储的内容相同
+    obj_b.v = "b"; // 通过obj_b访问(修改)堆内存的变量,这时候堆内存中对象值为:{v:"b"},由于obj_a和obj_b引用的是堆内存中同一个对象值
+    console.log(obj_a,obj_b);  //obj_a = obj_b ={v:"b"}
+    obj_b = {v:"c"}; //因为改的是整个对象，这里会在堆内存中创建一个新的对象值:{v:"c"},而现在的obj_b引用的是这个对象
+    console.log(obj_a,obj_b);  //obj_a = {v:"b"} obj_b = {v:"c"}  改变整个对象时，需要新建一个对象的值
+
+    var obj_c = {x1:2,y1:3};
+    var obj_d = {x2:2,y2:3};
+    console.log(obj_c.x1 === obj_d.x2);    //true  都是为对象类型而且值相同
+    console.log(obj_c === obj_d);          //false 对象和对象比较的是引用的地址，必然不相同
+
+    var a =123;
+    function foo1(x){
+    	x = 345;
+    }
+    foo1(a);
+    console.log(a);  //a=123
+    
+    //a为对象，其存储于堆区之中，引用传递，修改时则修改地址中的内容
+    var a ={y:123};
+    function foo2(x){
+	    x.y = 345;
+    }
+    foo2(a);
+    console.log(a.y);   //a.y = 345
+    //x.y修改了其中的内容，而x = {y:456}则是创建了新的对象，而引用的对象并没有修改
+    //函数里的对象创建的临时的新的对象,只在该作用域中
+    var a ={y:123};
+    function foo3(x){
+	    x.y = 345;
+	    x = {y:456};
+    }
+    foo3(a);
+    console.log(a.y);  //345
+
+    //先修改为对象的整体，创建新的对象，修改的为新的对象中的y的值，所以原来的对象会不变
+    //如果是先修改的为值，则会沿着这个，寻找块级的作用域
+    var a ={y:123};
+    function foo4(x){
+        x = {y:456};	
+        x.y = 345;	
+    }
+    foo4(a);
+    console.log(a.y);  //123
+
+
+    //这样即直接定义了两个对象，对象的引用地址不相同
+    var a3 = new Number(200);
+    var b3 = new Number(200);
+    console.log(a3 === b3);  //false
+    //此时a3和b3都是对象，但是指向相同的区域
+    var a3 = new Number(200);
+    var b3 = a3;
+    console.log(a3 == b3);  //true
+    console.log(a3 === b3);  //true
+
+    var a4 = new Number(200);
+    var b4 = 200;           //引用对象向基本的类型进行转换，==比较的为值和类型，其中有自动装箱拆箱的操作
+    console.log(a4 == b4);  //true
+    console.log(a4 === b4);  //false
+
+    console.log(Boolean(undefined));  //false
+    console.log(Boolean(""));     //false
+    console.log(Boolean("abc"));    //true
+
+
+    console.log(Number({x:1,y:2}));  //NAN
+    console.log(parseFloat("32343,345xx"));   //32343
+    console.log(parseInt("32343,345xx"));    //32343
+    console.log(String(234));   //234
+    console.log(String({x:1,y:2}));   //[object object]
+    
+
+
+</script>
+</html>

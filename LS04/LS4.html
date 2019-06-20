@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    var a = [1,2,3];
+    var b = a;
+    //a,b同时做了修改
+    console.log(a,b);   //[1,2,3]  [1,2,3]
+    b.pop();
+    console.log(a,b);   //[1,2]    [1,2]
+    b = [4,5,6];
+    console.log(a,b);    //[1,2]    [4,5,6]
+
+
+
+    function foo(x) {
+    x.push(4);
+    x = [5,6,7];
+    x.push(8);
+    //console.log(x);  [5,6,7,8]
+    //console.log(x);
+    }
+    var a = [1,2,3];
+    foo(a);
+    console.log(a);    //[1,2,3,4]
+
+
+    //严格模式下的arguments，变与不变
+    function f(a){
+        "use strict";
+        a = 42;
+        return [a, arguments[0]];
+    }
+    var pair = f(17);
+
+    console.log(pair[0]);//console.assert(pair[0] === 42);
+    console.log(pair[1]);//console.assert(pair[1] === 17);
+
+    // switch 语句在比较值时使用的是全等操作符,因此不会发生类型转换
+    var i = "1";
+    switch(i){
+        case 1:
+            console.log("case 1 Number");
+            break;
+        default:
+            console.log("default");
+    }  //default
+
+    //var j = '23';  case_222
+    var j = new Number(23);   //将对象赋给另一个变量
+    switch (j){
+        case 23:
+            console.log("case_111");
+            break;
+        case "23":
+            console.log("case_222");
+            break;
+        case new Number(23):
+            console.log("case_333");
+            break;
+        default:
+            console.log("case_default");
+    }    //case_default
+
+    //switch具有穿透性，需要用break来解决
+    var i = 1;//i=2、3、4
+    switch(i){
+        case 1:
+            console.log("case 1");
+        case 2:
+            console.log("case 2");
+            break;
+        case 3:
+            console.log("case 3");
+        //break;
+        case 4:
+            console.log("case 4");
+        default:
+            console.log("default");
+    }  //case1和case2
+
+
+    var obj = {x:10,y:20,z:"30"};
+    for(var k in obj){
+        console.log(k,obj[k],typeof obj[k]);
+    }   
+    /*
+        x 10 number
+        y 20 number
+        z 30 string
+    */
+</script>
+</html>

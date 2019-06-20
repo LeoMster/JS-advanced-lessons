@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+       //定义数组的时候可以为空值，直接写逗号，用逗号隔开表示此位置有元素
+       let [one,two,third] = [1,2,3];
+    let [, ,third] = [1,2,3];
+    console.log(third);
+
+    //此时的数组中只有两个元素，此时的...表示剩余的元素进行匹配
+    let [head,...tail] = [1,2,3,4];
+    console.log(head,tail);
+
+    //左侧的结构元素个数大于右侧未匹配到的变量为undefined，...跟的变量未匹配到元素为[]
+    let [d,e,...f] = ['a'];
+    console.log(d,e,f);    //a undefined []
+
+    //根据键名进行匹配,和顺序无关
+    let{bar,foo,other} = {foo:'foo1',bar:'bar1'};
+    console.log(bar,foo);
+
+    //自动完成装箱，转换为对象
+    let str = new String('abcdef');
+    let[a,b,c,p] = str;
+    console.log(a,b,c,p); 
+
+    //number
+    let  num = new Number(5);
+    let {toString :s1} = num;
+    console.log(s1);  //ƒ toString() { [native code] }证明Number方法的里面有toString属性
+
+
+    //函数
+    function fn1({x=0,y=0}={}){
+        return [x,y];
+    }
+    console.log(fn1()); //[0,0]
+    console.log(fn1({x=1,y=1}={}));
+
+
+    let [x,y] = ['a','b'];
+    [y,x] = [x,y];  //上边已经定义，此时不用定义
+    console.log(x,y);
+
+    //提取数据
+    function example(){
+        return [1,2,3];
+    }
+    let [a,b,c] = example();
+    console.log(a,b,c);
+
+    let json1 = {
+        'username':'zhangsan',
+        'course':['高等数学','大学英语'],
+        'age':20
+    }
+    <!-- //JSon math都是对象，没有构造函数
+    //JSON.parse(),转换为对象
+    let jsonstr = JSON.stringify(json1);
+    console.log(jsonstr);
+    json1 = JSON.parse(jsonstr);
+
+    let{username} = json1;
+    console.log(username);
+
+    let str = 'abcdef';
+    for(let i of str ){
+        console.log(i);
+    }
+
+    let reg1 = /xyz/gi;
+    let reg2 = new RegExp('xyz',gi);
+
+    //正则表达式
+    //sticky y修饰符 它会从上一次匹配成功的结束位置开始匹配
+    let str = 'aaa_aa_a';
+    let reg5 = /a+/g;
+    let reg6 = /a+/y;
+    // reg5.exec(str);
+    // reg5.exec(str);
+    console.log(reg6.exec(str));
+    //上一次匹配结果的索引位置
+    reg6.lastIndex;
+    console.log(reg6.exec(str));
+    //可以根据正则对象的sticky属性判断是否设置了y属性
+    console.log(reg6.sticky);
+
+
+
+    console.log(Array.from('abcdfr'));
+
+    function fn1(){
+        console.log(arguments);
+        Array.from(arguments);  //将类数组转换为数组转换为数组结构
+    }
+    fn1(1,2,3)
+
+
+    //将零散元素形成数组
+    console.log(Array.of(1,2,3));
+
+    //赋值数组里的元素到数组的特定位置上
+    //arr1.copyWithin(target,start,end);target:复制的目标位置；start:复制元素的起始位置；end:复制元素结束位置
+    var arr1 = [1,2,3,4,5,6];
+    arr1.copyWithin(0,4,5);
+
+
+
+    /*
+        Array.prototype.find遍历数组中的元素，验证是不是可以满足回调函数条件,返回满足条件的第一个数组元素
+    */
+    var arr1 = [10,15,20,25,30,40];
+    let el = arr1.find(function(element){
+        return element>19;
+    });
+
+
+
+    //同上，但是返回的为索引值
+    let elIndex = arr1.findIndex(function(element){
+        return element>29;
+    })
+    console.log(elIndex);
+
+    /*
+        fill(value,start,end);向数组特定的起始位置和结束位置之间填充value
+        keys()获取键的值；values获取数组具体值
+    */
+
+
+    //ES6对象的结构进行了简化。属性可以写成变量的形式，函数省略function,函数名(){}
+    let username = 'lily';
+    let obj = {
+        username,
+        fn1(){
+            console.log(this.username);
+        }
+    }
+
+    //通过键值来存储
+    let bar  = 'foo';
+    let obj1 = {
+        [bar]:'male'
+    }
+    console.log(obj1);
+
+    //只有枚举的属性才可以合并
+    let obj2 = {username:'zhangsna'};
+    let obj3 = {age:20};
+    console.log(Object.assign(obj2,obj3));
+    console.log(obj2.keys());  //键名
+    console.log(obj2.values());  //键值
+    console.log(obj2.entries());
+
+
+
+
+
+    //ES6函数
+    var obj = {
+        objName :'obj1',
+        showName:function(){
+            var intervalId = setTimeout(() => {
+                    console.log(this);   //ES5多层的嵌套，this对象指向的为window
+                    console.log(this.objName);  //ES6的箭头函数，this对象指向正确，指向obj
+            },3000);
+        }
+    }
+    obj.showName();
+
+
+    /*
+        1.如果有参数使用了默认值，函数内部不能出现和该参数名一样的变量
+        2.具有默认值的参数，必须写到没有默认值参数的后面
+    */
+    function fn1(x,y=2,z=3){
+        return x+y+z;
+    }
+    fn1(1);
+
+
+    /*
+        添加了剩余操作符的参数，会得到一个数组，接受剩余的实参,写在其他参数的后边
+    */
+    function fn2(x,...rest){
+        console.log(x);
+        console.log(rest);   
+    }
+    fn2(1,2,3,4,5); -->
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Point{
+    constructor(){
+        this.x = 1;
+        this.y = 2;
+        var private_z = 3;
+        this.d = function(){
+            console.log(this.x,this.y,private_z);//可以访问私有数据成员
+        }
+    }
+    show(){
+        //console.log("show:",this.x,this.y,private_z);//报错,因为无法访问私有数据成员
+        console.log("show:",this.x,this.y);
+    }
+}
+    var p2 = new Point();
+    console.log(Object.getOwnPropertyNames(p2));
+    console.log(Object.getOwnPropertyNames(p2.__proto__));
+    p2.d();
+    p2.show();
+
+    //class 是语法糖 本质还是原型继承
+    console.log(typeof Point);//function
+    console.log(Point instanceof Function);//true
+    console.log(Point === Point.prototype.constructor); // true
+    console.log(p2.constructor === Point.prototype.constructor);
+
+    //与ES5的区别 class类内定义的方法是不可枚举的
+    console.log(Object.keys(p2));
+    console.log(Object.keys(p2.__proto__));
+
+    //补充：
+    // 由于类的方法都定义在prototype对象上面，所以类的新方法可以添加在prototype对象上面。
+    // Object.assign方法可以很方便地一次向类添加多个方法。
+    class Point {
+        constructor(){
+
+        }
+    }
+    Object.assign(Point.prototype, {
+        foo(){},
+        fee(){}
+    });
+
+
+
+    //目前有一个静态属性的提案，对实例属性和静态属性都规定了新的写法
+    class MyClass {
+        static myStaticProp = 42;
+        constructor() {
+            console.log(MyClass.myStaticProp); // 42
+        }
+    }
+    // 同样的，这个新写法大大方便了静态属性的表达，ES6暂不支持
+    // 老写法
+    class Foo {
+        // ...
+    }
+    Foo.prop = 1;
+
+    // 新提案的写法 ES6暂不支持
+    class Foo {
+        static prop = 1;
+    }
+    // 上面代码中，老写法的静态属性定义在类的外部。整个类生成以后，再生成静态属性。
+    // 这样让人很容易忽略这个静态属性，也不符合相关代码应该放在一起的代码组织原则。
+    // 另外，新写法是显式声明（declarative），而不是赋值处理，语义更好
+    // 子类必须在constructor方法中调用super方法，否则新建实例时会报错。
+    // 这是因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。
+    // 如果不调用super方法，子类就得不到this对象
+
+    // ES5 的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面（Parent.call(this)）。
+    // ES6 的继承机制完全不同，必须先调用super方法，
+    // 然后再用子类的构造函数修改this。
+    //
+    // 如果子类没有定义constructor方法，这个方法会被默认添加，代码如下。
+    // 也就是说，不管有没有显式定义，任何一个子类都有constructor方法
+
+
+    // 另一个需要注意的地方是，在子类的构造函数中，只有调用super之后，
+    // 才可以使用this关键字，否则会报错。
+</script>
+</html>

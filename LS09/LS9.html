@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log(a);  //undefined
+    var a = 1;
+    console.log(a);   //1
+
+    var a;
+    console.log(a);   //undefined
+    a = 1;
+    console.log(a);    //1
+
+    console.log(a,b);//undefined undefined
+    var b = 23;
+    console.log(a,b);//undefined  23 
+    var a = b;
+    console.log(a,b); //23  23
+
+
+    console.log(obj1,obj2);//undefined undefined
+    var obj1 = {x:23};
+    console.log(obj1,obj2);//{x:23} undefined
+    var obj2 = obj1;
+    console.log(obj1,obj2);//{x:23}  {x:23}
+    obj2.x =25;
+    console.log(obj1,obj2); //{x:25}  {x:25}
+
+
+    //执行两个同名的函数，后一个函数将前一个函数覆盖
+    foo();//f_2
+    function foo(){
+        console.log("f_1");
+    }
+    function foo(){
+        console.log("f_2");
+    }
+    //等价于
+    function foo(){
+        console.log("f_1");
+    }
+    function foo(){
+        console.log("f_2");
+    }
+    foo();//f_2
+
+    //程序会报错，提醒foo并不是一个function
+    foo();
+    var foo = function(){
+        console.log("foo");
+    };
+
+    //function前有运算符，不提升
+    console.log(foo);     //undefined
+    var foo = function(){
+        console.log("foo");
+    };
+    foo();    //foo
+    console.log(typeof(foo));  //function
+
+
+    AA();
+    function AA(){
+        console.log("AA_1");
+    }
+    var AA = function AA(){
+        console.log("AA_2");
+    };
+    AA();
+
+
+    //等价于
+    function AA(){
+        console.log("AA_1");
+    }
+    var AA;
+
+    AA();
+    AA = function AA(){
+        console.log("AA_2");
+    };
+    AA();
+    //输出结果:AA_1   AA_2
+
+    //词法作用域 与调用形式无关 
+    var name = "Jack";
+    function echo() {
+        console.log(name);
+    }
+    function foo() {
+        var name = "Bill";
+        echo();
+    }
+    foo();   //jack
+
+    //此时的x为全局的作用域
+    var x = "outside f1";
+    var f1 = function () {
+        //var x = "inside f1";//如果没有这行，则两次输出都为outside
+        console.log(x);   //outside f1
+    };
+    f1();
+    console.log(x);    //outside f1
+
+
+
+
+    //若函数内未加var 则相当于创建了全局变量
+    var f2 = function () {
+        var y = "局部";
+        //y = "全局";
+        console.log(y);
+    };
+    f2();
+    console.log(y);//若函数内有var此行报错，若函数内没有var则此行输出全局变量y值
+
+
+    //ES5中无块作用域
+    if(true){
+        var z = 23;
+    }
+    console.log(z);//正常输出
+
+    function foo(){
+        console.log("j:",j);//undefined
+        var j = 10;
+        console.log("j:",j);//10
+    }
+    foo();
+
+    
+</script>
+</html>

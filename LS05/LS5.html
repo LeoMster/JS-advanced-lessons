@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //当二目都是字符串时，二者相连的结果字符类型仍然为String
+    console.log("1"+"2"); //"12"
+    console.log(typeof('1'+'2'));   //String
+    console.log("1"+2); //"12"
+    console.log(1+{}); //"1[object Object]"
+    console.log(true+true); //2
+    console.log("5"-2); //3
+    console.log(typeof('5'-2));  //number
+
+    var x = "1";
+    console.log(x+=1);  //1
+    var x = 1;
+    console.log(x+=1);  //2
+
+
+    console.log(3===3);   //true
+    console.log(3==="3");   //false
+    console.log(3=="3");    //true
+    console.log(3==new String(3));   //true
+    console.log(3===new String(3));    //false
+
+    var obj1 = new String("xyz");
+    var obj2 = new String("xyz");
+    console.log("xyz"===obj1);   //false
+    console.log(obj1 == obj2);    //false
+    console.log(obj1 === obj2);    //false
+    console.log(obj1 == new String("xyz"));   //false
+
+    var obj1 = new String("xyz");
+    var obj2 = new String("xyz");  //false
+    console.log("xyz"!=obj1);    //true
+    console.log(obj1 !== obj2);    //true
+    console.log(obj1 != obj2);      //true
+    console.log(obj1 != new String("xyz"));  //true
+
+
+
+
+</script>
+</html>

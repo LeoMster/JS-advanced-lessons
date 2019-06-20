@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+       //Object.ptototype的下一级原型链为null
+       var obj1 = {z:1,
+    sayHi:function(){console.log(this.z)}};
+    var obj2 = Object.create(obj1);
+    console.log(obj2.z);
+    console.log(obj2.sayHi);
+    console.log(obj1.__proto__ == Object.prototype);  //true
+    console.log(obj2.__proto__);  //obj1
+    console.log(obj2.__proto__.__proto__);  //Object.prototype
+    console.log(obj2.__proto__.__proto__.__proto__);  //nll
+    //in在判断时，判断对象以及其原型链上是否具有该属性
+    obj1.z = 5;
+    //delete删除属性时，只可以删除自身的属性，不可以删除原型链上的属性
+
+
+    function Person(username,age){
+        this.username = username;
+        this.age = age;
+    }
+    //person和person2共用sayhi方法，节省空间
+    var person = new Person("zhangsan",30);
+    var person2 = new Person("lisi",20);
+    Person.prototype.sayHi = function(){
+        console.log(this.username);
+    }
+    console.log(person.__proto__ == person2.__proto__);
+    console.log(person.__proto__ == Person.prototype);  //true
+    console.log(person.__proto__);
+    console.log(Person.prototype.__proto__.__proto__);
+    person.sayHi();
+    console.log(Object.__proto__);
+    console.log(Person.prototype.__proto__ == Object.__proto__);   //false
+    //原型链的关系
+    console.log(Person.prototype == person.__proto__);   //true
+    console.log(Person.prototype.constructor == Person);   //true
+    console.log(Person.prototype.__proto__ == Object.prototype);  //true
+    console.log(Object.prototype.constructor == Object);   //true
+    console.log(Object.prototype.__proto__ == null);   //true
+
+
+
+    //定义一个车的对象（父对象），height,width,weight
+    var car = {
+        height:150,
+        width:200,
+        weight:2000
+    }
+    //创建一个小轿车的对象，继承车相关的属性，自己具有color,seatNum,create方法以及构造函数形式都可以继承
+    var smallcar = Object.create(car);
+    smallcar.color ='black';
+    smallcar.seatnum = 100;
+
+    function createSmallCar(color,seatNum){
+        this.color = color;
+        this.seatNum = seatNum;
+    }
+    createSmallCar.prototype = car;
+    var smallcar = new createSmallCar("red",4);
+</script>
+</html>

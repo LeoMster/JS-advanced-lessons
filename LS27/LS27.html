@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let userId = 123;
+    document.onclick = function () {
+        console.log("userId = ",userId);
+        //alert("userId = "+userId);
+    };
+
+    let a=2,b=3;
+    if(a<b){
+        let userId = 234;
+    }
+
+    //let 定义的变量 并不像 var 那样直接作为全局对象的属性
+    var x = 23;
+    let y = 34;
+    console.log(window.x,window.y);//23 undefined
+
+
+
+    //使用let可有效避免变量共享问题
+    for (let i = 0; i < 3; i++) {
+        setTimeout(function() {
+            console.log(new Date, i);
+        }, 1000*i);
+    }
+
+
+
+    //const指向的对象引用不可变，但其属性或元素（如果是数组对象的话）是可变的
+    const a = [];
+    a.push(123,234);//可以
+    a.length = 1;//可以
+    a = "str";//报错，因为a是const其元素或属性可改，但其引用不能修改类似于 const指针
+
+
+
+    const PI = 3.1415926;
+    console.log(PI);
+    // PI = 3;//给常量再赋值 报错
+
+
+
+
+    //let和const不存在变量提升
+    console.log(a);//报错
+    let a = 2;
+    console.log(a);
+
+
+    //let const不能重复声明
+</script>
+</html>

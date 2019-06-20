@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //函数定义 
+    //三目表达式如果为真则输出？后的第一个，如果为假，则输出最后一个
+    function max(a,b){
+        return a>b?a:b;
+    }
+    max(2,3);   //3
+
+    //函数定义  函数表达式方式 等号右侧可以是匿名函数也可以是非匿名函数
+    var max = function (a,b)
+    { 
+        return a>b?a:b;
+    };
+    max(2,3);
+
+
+    //非匿名函数便于调用栈追踪 测试使用匿名和非匿名函数的区别
+    //函数定义 Function构造函数方式
+    var max = new Function("a","b","return a>b?a:b");
+    max(2,3);
+
+
+    //普通函数直接调用
+    function test1() {
+        console.log("this is",this);
+    }
+    test1();//window
+
+    function test2() {
+        function test3(){
+            console.log("this is",this);
+        }
+        test3();
+    }
+    test2();//this is window
+
+    var obj = {
+        name:"obj",
+        x:23,
+        test:function(){
+            console.log(this.x,this);
+        }
+    };
+    obj.test();  //obj
+
+
+    function foo(){}
+    console.log(foo); //f foo(){}
+    console.log(typeof foo); //function
+    console.log(foo instanceof Object); //true
+    console.log(foo instanceof Function); //true
+    console.log(foo === window.foo); //true
+    
+
+    console.log(typeof Function);//function
+    console.log(typeof Array);	 //function
+    console.log(typeof Date);	 //function
+    console.log(typeof Error); 	 //function
+    console.log(typeof Math);	 //Object
+    console.log(typeof JSON);   //Object
+
+    console.log(typeof new Function());  //function
+    console.log(typeof new Array());    //Object
+    console.log(typeof new Date());     //Object
+
+    console.log(Function instanceof Function);  //true
+    console.log(Function instanceof Object);    //true
+
+    console.log(Array instanceof Function);   //true
+    console.log(Array instanceof Object);     //true
+
+    console.log(Date instanceof Function);   //true
+    console.log(Date instanceof Object);     //true
+
+    console.log(Math instanceof Function);   //false
+    console.log(Math instanceof Object);    //true
+
+    console.log(JSON instanceof Function);   //false
+    
+</script>
+</html>

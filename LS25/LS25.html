@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+            #div1{
+                height:400px;
+                width: 400px;
+                background-color: bisque;
+                margin: 0 auto;
+            }
+            #div2{
+                height: 200px;
+                width: 200px;
+                background: pink;
+                margin: 0 auto;
+            }
+            #div3{
+                height: 100px;
+                width: 100px;
+                background:lightcyan;
+                margin: 0 auto;
+            }
+            #div4{
+                height: 50px;
+                width: 50px;
+                background:lightgoldenrodyellow;
+                margin: 0 auto;
+            }
+    </style>
+</head>
+<body>
+    <div id ='div1'>
+        <div id ='div2'>
+            <div id = 'div3'>
+                <div id = 'div4'>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="http://www.baidu.com" id = 'baidu'>百度</a>
+</body>
+<script>
+    //时间的前面没有on
+    var div1 = document.getElementById('div1');
+    // var baidu = document.getElementById('baidu');
+    // div1.addEventListener('click',function(e){
+    //     //console.log("div被点击了");
+    //     //target表示事假的触发对象
+    //     console.log(e);
+    // })
+    // //e.preventDefault();阻止元素的默认效果的触发
+    // baidu.addEventListener('click',function(e){
+    //     // 得不到准确的时间，e.timeStamp
+    //     // var num = e.timeStamp;
+    //     // console.log(new Date(num));
+    //     e.preventDefault();
+    // })
+
+
+
+    //捕获和冒泡操作
+    //当点击div2的时候,div1的时间同时被触发
+    //冒泡:从最里面的元素事件开始，向外开始触发事件,默认的情况都是false
+    //事件捕获则为从外向内触发事件,addEventListener的第三个参数为true时，即会触发此事件;false时为冒泡
+    //e.target为最根源的触发事件的元素,最里面的元素;e.currentTarget为当前触发事件的DOM对象
+    //e.stopImmediatePropagation()阻止冒泡事件和捕获事件的进一步传播
+    //e.bubbles只读属性，判断当前的事件是否为冒泡事件，是则为true
+    //e.cancelable判断是否存在e.preventDefault()，是则为true
+    //e.cancelBubble和e.stopImmediatePropagation二者相同，都是阻止事件的传播
+    var div2 = document.getElementById('div2');
+    var div3 = document.getElementById('div3');
+    var div4 = document.getElementById('div4');
+    div1.addEventListener('click',function(e){
+        console.log("div1被点击了");
+        console.log(e.target);
+        console.log(e.currentTarget);
+    },false);
+    div2.addEventListener('click',function(e){
+        console.log("div2被点击了");
+        console.log(e.target);
+        console.log(e.currentTarget);
+    },true)
+    div3.addEventListener('click',function(e){
+        console.log("div3被点击了");
+        console.log(e.target);
+        console.log(e.currentTarget);
+    },true)
+    div4.addEventListener('click',function(e){
+        e.stopImmediatePropagation();
+        console.log("div4被点击了");
+        console.log(e.target);
+        console.log(e.currentTarget);
+        console.log(e.bubbles);
+        console.log(e.cancelable);
+        console.log(e.cancelBubble);
+    },false)
+</script>
+</html>

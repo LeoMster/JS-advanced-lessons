@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+       /*
+        new Promise(function(resolve,reject){
+            异步操作
+            resolve():异步操作成功时的调用
+            rejetct():异步操作失败时的调用
+        }).then(function(){
+            其实就是resolve的函数定义
+        },function(){
+            其实就是rejetc的函数定义
+        })
+    */
+
+    /*promise将异步的代码与同步的方式进行执行,先执行同步代码，再执行异步代码,不会等待后再执行*/
+    setTimeout(function(){
+        console.log("时间到");
+    },3000);
+    console.log("同步代码1");
+    console.log("同步代码2");
+
+    new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log('时间到');
+            resolve('hello');  //异步操作成功的时候回调函数，会调用此方法
+            //reject为异步操作失败时候的回调函数，会调用此方法
+        },3000)
+    }). then (function(val){
+        console.log('val');
+    },function(){
+        console.log('reject');
+    }).catch(function(){
+        //捕获异常
+    }).done(function(){
+        console.log("不论如何都会执行")
+    })  //,finally()
+</script>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+        // var i=0;
+    // console.log(i);
+    // for(var i = 0;i<10;i++){
+    //     console.log(i);
+    // }
+
+
+
+    // --异步方式
+    // window.onload = function(){
+    //     console.log('页面加载完成');
+    // }
+    // console.log('主线程');
+
+
+    // --回调函数
+    // /*不会阻塞主线程执行，在满足特定条件时，会反馈到主线程*/
+    // var i=0;
+    // var intervalId = setInterval(function(){
+    //     console.log(i++);
+    // },3000)
+
+
+    /* ajex可以以异步的方式，实现前后端的交互。
+        前端通过发起ajex请求的方式，来从服务器端获取数据
+        请求方式有get操作,pose操作
+        获取数据时不需要刷新页面
+     */
+     /*
+        在前端页面实现Jqurery ajex请求,ajex请求指明请求的后端地址，后端程序接受到请求，做出相应
+        前端接受后端的相应内容，并在前端使用,前后端文件必须放到服务器上面
+     */
+     $('#btn').click(function(){
+            $.ajax({
+                url:'./sever.php',
+                type:'get',
+                success:function(data){
+                    console.log(data);
+                },
+                error:function(err){
+                    console.log(err);
+                }
+            })
+        })
+</script>
+</html>
